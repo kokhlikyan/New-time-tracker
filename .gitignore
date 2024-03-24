@@ -1,0 +1,9 @@
+.DS_Store
+.idea
+.venv
+build
+dist
+Tracker.spec
+**/__pycache__
+store
+secret.json
