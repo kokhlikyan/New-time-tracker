@@ -17,39 +17,37 @@ class Projects(QObject):
 
     def render(self):
         for i in range(1, 5):
+
             self.project = QFrame(self.app.scrollAreaWidgetContents)
-            self.project.setObjectName(f'project_{i}')
+            self.project.setObjectName(u"project")
             self.project.setMaximumSize(QSize(16777215, 16777215))
             self.project.setAutoFillBackground(False)
             self.project.setStyleSheet(u"#project_frame{\n"
-                                       "	border-bottom: 2px solid #EDEEFF;\n"
-                                       "	padding-bottom:16px;	\n"
                                        "	border-radius: 0;\n"
                                        "}")
             self.project.setFrameShape(QFrame.StyledPanel)
             self.project.setFrameShadow(QFrame.Raised)
-
             self.verticalLayout_9 = QVBoxLayout(self.project)
-            self.verticalLayout_9.setObjectName(f"verticalLayout_{1 + i}")
+            self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+            self.verticalLayout_9.setContentsMargins(-1, 12, -1, 12)
             self.project_frame = QFrame(self.project)
             self.project_frame.setObjectName(u"project_frame")
+            self.project_frame.setStyleSheet(u"")
             self.project_frame.setFrameShape(QFrame.StyledPanel)
             self.project_frame.setFrameShadow(QFrame.Raised)
-
             self.verticalLayout_5 = QVBoxLayout(self.project_frame)
-            self.verticalLayout_5.setObjectName(f"verticalLayout_{2 + i}")
+            self.verticalLayout_5.setObjectName(u"verticalLayout_5")
             self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
-
             self.project_frame_top = QFrame(self.project_frame)
             self.project_frame_top.setObjectName(u"project_frame_top")
             self.project_frame_top.setMinimumSize(QSize(0, 28))
             self.project_frame_top.setMaximumSize(QSize(16777215, 28))
-            self.project_frame_top.setStyleSheet(u"")
+            self.project_frame_top.setStyleSheet(u"background: none;")
             self.project_frame_top.setFrameShape(QFrame.StyledPanel)
             self.project_frame_top.setFrameShadow(QFrame.Raised)
             self.horizontalLayout_5 = QHBoxLayout(self.project_frame_top)
             self.horizontalLayout_5.setSpacing(0)
-            self.horizontalLayout_5.setObjectName(f"horizontalLayout_{1 + i}")
+            self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
             self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
             self.project_control_frame = QFrame(self.project_frame_top)
             self.project_control_frame.setObjectName(u"project_control_frame")
@@ -59,21 +57,22 @@ class Projects(QObject):
             # ifndef Q_OS_MAC
             self.horizontalLayout_6.setSpacing(-1)
             # endif
-            self.horizontalLayout_6.setObjectName(f"horizontalLayout_{2 + i}")
+            self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
             self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
             self.project_btn = QPushButton(self.project_control_frame)
             self.project_btn.setObjectName(u"project_btn")
             self.project_btn.setCursor(QCursor(Qt.PointingHandCursor))
             self.project_btn.setStyleSheet(u"border: none;")
-
-            self.icon1 = QIcon()
-            self.icon1.addFile(u":/icons/icons/play.svg", QSize(), QIcon.Normal, QIcon.Off)
-            self.icon1.addFile(u":/icons/icons/stop.svg", QSize(), QIcon.Active, QIcon.On)
-            self.project_btn.setIcon(self.icon1)
+            icon1 = QIcon()
+            icon1.addFile(u":/icons/icons/play.svg", QSize(), QIcon.Normal, QIcon.Off)
+            icon1.addFile(u":/icons/icons/stop.svg", QSize(), QIcon.Active, QIcon.On)
+            self.project_btn.setIcon(icon1)
             self.project_btn.setIconSize(QSize(28, 28))
             self.project_btn.setCheckable(True)
             self.project_btn.setChecked(False)
+
             self.horizontalLayout_6.addWidget(self.project_btn)
+
             self.project_name = QLabel(self.project_control_frame)
             self.project_name.setObjectName(u"project_name")
             self.project_name.setStyleSheet(u"color: #111111;\n"
@@ -101,7 +100,7 @@ class Projects(QObject):
             self.project_frame_bottom.setFrameShape(QFrame.StyledPanel)
             self.project_frame_bottom.setFrameShadow(QFrame.Raised)
             self.verticalLayout_6 = QVBoxLayout(self.project_frame_bottom)
-            self.verticalLayout_6.setSpacing(10)
+            self.verticalLayout_6.setSpacing(16)
             self.verticalLayout_6.setObjectName(u"verticalLayout_6")
             self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
             self.project_description_toggle = QPushButton(self.project_frame_bottom)
@@ -110,13 +109,13 @@ class Projects(QObject):
             self.project_description_toggle.setStyleSheet(u"border:none;\n"
                                                           "color: #111111;\n"
                                                           "font-size: 14px;\n"
-                                                          "font-weight: 500;")
-            self.icon2 = QIcon()
-            self.icon2.addFile(u":/icons/icons/bottom.svg", QSize(), QIcon.Normal, QIcon.Off)
-            self.icon2.addFile(u":/icons/icons/top.svg", QSize(), QIcon.Active, QIcon.On)
-            self.project_description_toggle.setIcon(self.icon2)
+                                                          "font-weight: 500;\n"
+                                                          "background: none;")
+            icon2 = QIcon()
+            icon2.addFile(u":/icons/icons/top.svg", QSize(), QIcon.Normal, QIcon.Off)
+            icon2.addFile(u":/icons/icons/bottom.svg", QSize(), QIcon.Active, QIcon.On)
+            self.project_description_toggle.setIcon(icon2)
             self.project_description_toggle.setCheckable(True)
-            self.project_description_toggle.setChecked(False)
 
             self.verticalLayout_6.addWidget(self.project_description_toggle, 0, Qt.AlignRight)
 
@@ -141,7 +140,8 @@ class Projects(QObject):
                                                         "color: #000080;\n"
                                                         "font-size: 14px;\n"
                                                         "font-weight: 700;\n"
-                                                        "text-decoration: underline;")
+                                                        "text-decoration: underline;\n"
+                                                        "background: none;")
             self.project_description_save.setCheckable(True)
 
             self.verticalLayout_6.addWidget(self.project_description_save, 0, Qt.AlignLeft)
@@ -149,6 +149,27 @@ class Projects(QObject):
             self.verticalLayout_5.addWidget(self.project_frame_bottom, 0, Qt.AlignTop)
 
             self.verticalLayout_9.addWidget(self.project_frame)
+
+            self.project_line_5 = QFrame(self.app.scrollAreaWidgetContents)
+            self.project_line_5.setObjectName(u"project_line_5")
+            self.project_line_5.setMinimumSize(QSize(0, 2))
+            self.project_line_5.setStyleSheet(u"border:none;")
+            self.project_line_5.setFrameShape(QFrame.StyledPanel)
+            self.project_line_5.setFrameShadow(QFrame.Raised)
+            self.verticalLayout_28 = QVBoxLayout(self.project_line_5)
+            self.verticalLayout_28.setObjectName(u"verticalLayout_28")
+            self.verticalLayout_28.setContentsMargins(12, 0, 12, 0)
+            self.line_9 = QLabel(self.project_line_5)
+            self.line_9.setObjectName(u"line_9")
+            self.line_9.setMinimumSize(QSize(0, 2))
+            self.line_9.setMaximumSize(QSize(16777215, 2))
+            self.line_9.setStyleSheet(u"background-color: #EDEEFF;")
+
+            self.verticalLayout_28.addWidget(self.line_9)
+
+            self.app.verticalLayout_4.addWidget(self.project_line_5)
+
+
 
             self.app.verticalLayout_4.addWidget(self.project)
             self.project_description_toggle.toggle()
@@ -200,7 +221,10 @@ class Projects(QObject):
             self.app.header_btn.setEnabled(False)
         else:
             self.app.header_btn.setEnabled(True)
+            project = subject.get_project()
             if subject.get_status():
                 self.app.header_btn.setChecked(True)
+                project.parent().setStyleSheet('background-color: #EDEEFF')
             else:
                 self.app.header_btn.setChecked(False)
+                project.parent().setStyleSheet('background-color: #FFFFFF')

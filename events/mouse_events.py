@@ -1,26 +1,26 @@
 import logging
 import threading
 from pynput import mouse
-from storage.events import add_or_update_mouse_event
-
-
-class MouseListener(threading.Thread):
-    def __init__(self, query, session_id):
+from observer.main import Observer, Subject
+from storage.queries.selects import get_project, get_mouse_events
+from storage.queries.inserts import get_project, create_or_update_mouse_event
+class MouseListener(threading.Thread, Observer):
+    def __init__(self):
         super(MouseListener, self).__init__()
-        self.query = query
-        self.session_id = session_id
+        self.project = None
         self.daemon = True
         self.listener = None
         self.running = False
+        self.left, self.right = 0, 0
 
     def on_click(self, x, y, button, pressed):
         if pressed:
-            left, right = 0, 0
             if button._name_ == 'left':
-                left = 1
+                self.left = self.left + 1
             elif button._name_ == 'right':
-                right = 1
-            add_or_update_mouse_event(self.query, self.session_id, left, right)
+                self.right = self.right + 1
+
+
 
     def run(self):
         if not self.running:
@@ -35,3 +35,20 @@ class MouseListener(threading.Thread):
             self.listener.join()
             self.running = False
             logging.info('mouse event listener is stoped')
+
+    def update(self, subject: Subject) -> None:
+        if subject.get_status():
+
+            self.project = get_project(subject.get_project_name())
+            mouse_event = get_mouse_events(self.project.id)
+            if mouse_event is not None:
+                self.left = mouse_event.left
+                self.right = mouse_event.right
+            else:
+                create_or_update_mouse_event(self.project.id, self.left, self.right)
+            self.run()
+        else:
+            if self.project is not None:
+                create_or_update_mouse_event(self.project.id, self.left, self.right)
+            self.stop_listener()
+        print('Left: ', self.left, 'Right:', self.right)

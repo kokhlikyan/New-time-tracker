@@ -7,11 +7,10 @@ from ui.app.settings import Settings
 from ui.dialog import AuthDialog
 from ui.main_ui import Ui_MainWindow
 from events.keyboard_events import KeyboardMonitorThread
+from events.mouse_events import MouseListener
 
 from storage.queries.deletes import delete_session
 from storage.queries.selects import select_session
-
-from observer.main import Observer
 
 
 class ExpenseTracker(QMainWindow):
@@ -30,9 +29,11 @@ class ExpenseTracker(QMainWindow):
         self.settings = Settings(self.ui)
 
         self.timer = Timer(self.subject)
+        self.mouse_thrade = MouseListener()
 
         self.subject.attach(self.projects)
         self.subject.attach(self.timer)
+        self.subject.attach(self.mouse_thrade)
         self.subject.notify()
 
     def closeEvent(self, event):

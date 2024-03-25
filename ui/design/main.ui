@@ -47,7 +47,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>180</height>
+           <height>200</height>
           </size>
          </property>
          <property name="maximumSize">
@@ -57,8 +57,20 @@
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-image: url(:/icons/icons/bg.png);
-border-radius: 5px;</string>
+          <string notr="true">#header{
+	border-radius: 5px;
+	border-image: url(:/icons/icons/bg.png);
+}
+
+#frame{
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, 102);
+}
+
+QPushButton{
+	border: none;
+	bakcground-color: none;
+}</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
           <property name="leftMargin">
@@ -78,8 +90,32 @@ border-radius: 5px;</string>
           </property>
           <item row="0" column="0">
            <widget class="QFrame" name="frame">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="sizeIncrement">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="toolTipDuration">
+             <number>1</number>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
             <property name="styleSheet">
-             <string notr="true">background-image: url(:/icons/icons/bg.png);</string>
+             <string notr="true"/>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -90,6 +126,9 @@ border-radius: 5px;</string>
             <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0">
              <property name="spacing">
               <number>12</number>
+             </property>
+             <property name="sizeConstraint">
+              <enum>QLayout::SetDefaultConstraint</enum>
              </property>
              <property name="leftMargin">
               <number>12</number>
@@ -129,7 +168,8 @@ background: none;
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
-                <string notr="true">background:none</string>
+                <string notr="true">background:none;
+</string>
                </property>
                <property name="text">
                 <string/>
@@ -165,6 +205,9 @@ background: none;
           <string notr="true"/>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="spacing">
+           <number>-1</number>
+          </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -193,9 +236,7 @@ background: none;
 #projects_header{
 	border: none;
 }
-#projects_title{
-	border-bottom: 2px solid #EDEEFF;
-}</string>
+</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -204,6 +245,9 @@ background: none;
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="topMargin">
               <number>0</number>
              </property>
@@ -232,7 +276,7 @@ background: none;
                  <number>0</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>16</number>
+                 <number>0</number>
                 </property>
                 <item>
                  <widget class="QLabel" name="projects_header_title">
@@ -259,9 +303,73 @@ font-weight: 700;</string>
            </widget>
           </item>
           <item>
+           <widget class="QFrame" name="project_line_4">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>2</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>2</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border:none;</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_27">
+             <property name="leftMargin">
+              <number>12</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>12</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="line_8">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>2</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>2</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #EDEEFF;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
            <widget class="QScrollArea" name="projects_frame">
             <property name="cursor" stdset="0">
              <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="toolTipDuration">
+             <number>-1</number>
             </property>
             <property name="styleSheet">
              <string notr="true">QScrollArea{
@@ -301,7 +409,7 @@ QScrollBar::add-line:vertical{
                <x>0</x>
                <y>0</y>
                <width>567</width>
-               <height>351</height>
+               <height>329</height>
               </rect>
              </property>
              <property name="minimumSize">
@@ -317,6 +425,9 @@ border: none;
 }</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_4">
+              <property name="spacing">
+               <number>0</number>
+              </property>
               <property name="leftMargin">
                <number>0</number>
               </property>
@@ -341,9 +452,12 @@ border: none;
                  <bool>false</bool>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">#project_frame{
-	border-bottom: 2px solid #EDEEFF;
-	padding-bottom:16px;	
+                 <string notr="true">QFrame{
+	
+	background-color: #EDEEFF;
+}
+
+#project_frame{
 	border-radius: 0;
 }</string>
                 </property>
@@ -354,8 +468,11 @@ border: none;
                  <enum>QFrame::Raised</enum>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_9">
+                 <property name="topMargin">
+                  <number>12</number>
+                 </property>
                  <property name="bottomMargin">
-                  <number>0</number>
+                  <number>12</number>
                  </property>
                  <item>
                   <widget class="QFrame" name="project_frame">
@@ -396,7 +513,7 @@ border: none;
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true"/>
+                       <string notr="true">background: none;</string>
                       </property>
                       <property name="frameShape">
                        <enum>QFrame::StyledPanel</enum>
@@ -520,7 +637,7 @@ font-weight: 600;</string>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_6">
                        <property name="spacing">
-                        <number>10</number>
+                        <number>16</number>
                        </property>
                        <property name="leftMargin">
                         <number>0</number>
@@ -543,15 +660,16 @@ font-weight: 600;</string>
                           <string notr="true">border:none;
 color: #111111;
 font-size: 14px;
-font-weight: 500;</string>
+font-weight: 500;
+background: none;</string>
                          </property>
                          <property name="text">
                           <string>Description </string>
                          </property>
                          <property name="icon">
                           <iconset resource="resources.qrc">
-                           <normaloff>:/icons/icons/bottom.svg</normaloff>
-                           <activeon>:/icons/icons/top.svg</activeon>:/icons/icons/bottom.svg</iconset>
+                           <normaloff>:/icons/icons/top.svg</normaloff>
+                           <activeon>:/icons/icons/bottom.svg</activeon>:/icons/icons/top.svg</iconset>
                          </property>
                          <property name="checkable">
                           <bool>true</bool>
@@ -601,7 +719,8 @@ padding: 12px;</string>
 color: #000080;
 font-size: 14px;
 font-weight: 700;
-text-decoration: underline;</string>
+text-decoration: underline;
+background: none;</string>
                          </property>
                          <property name="text">
                           <string>Save</string>
@@ -615,6 +734,61 @@ text-decoration: underline;</string>
                      </widget>
                     </item>
                    </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="project_line_5">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border:none;</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_28">
+                 <property name="leftMargin">
+                  <number>12</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>12</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="line_9">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>2</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>2</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: #EDEEFF;</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -641,6 +815,8 @@ text-decoration: underline;</string>
         </widget>
        </item>
       </layout>
+      <zorder>projects</zorder>
+      <zorder>header</zorder>
      </widget>
     </item>
     <item>
@@ -720,7 +896,7 @@ font-weight: 500;
 border: none;</string>
             </property>
             <property name="text">
-             <string>  Lou out</string>
+             <string>Log out</string>
             </property>
             <property name="icon">
              <iconset resource="resources.qrc">

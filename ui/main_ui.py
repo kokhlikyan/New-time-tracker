@@ -9,17 +9,18 @@
 ################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
+                            QMetaObject, QObject, QPoint, QRect,
+                            QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+                           QFont, QFontDatabase, QGradient, QIcon,
+                           QImage, QKeySequence, QLinearGradient, QPainter,
+                           QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
-    QLabel, QMainWindow, QPlainTextEdit, QPushButton,
-    QScrollArea, QSizePolicy, QSpacerItem, QVBoxLayout,
-    QWidget)
+                               QLabel, QMainWindow, QPlainTextEdit, QPushButton,
+                               QScrollArea, QSizePolicy, QSpacerItem, QVBoxLayout,
+                               QWidget, QLayout)
 import ui.resources
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -28,9 +29,9 @@ class Ui_MainWindow(object):
         MainWindow.setEnabled(True)
         MainWindow.resize(591, 699)
         MainWindow.setStyleSheet(u"*{\n"
-"	background-color: #FFFFFF;\n"
-"}\n"
-"")
+                                 "	background-color: #FFFFFF;\n"
+                                 "}\n"
+                                 "")
         self.content = QWidget(MainWindow)
         self.content.setObjectName(u"content")
         self.verticalLayout_10 = QVBoxLayout(self.content)
@@ -43,38 +44,61 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.header = QWidget(self.content_frame)
         self.header.setObjectName(u"header")
-        self.header.setMinimumSize(QSize(0, 180))
+        self.header.setMinimumSize(QSize(0, 200))
         self.header.setMaximumSize(QSize(16777215, 16777215))
-        self.header.setStyleSheet(u"background-image: url(:/icons/icons/bg.png);\n"
-"border-radius: 5px;")
+        self.header.setStyleSheet(u"#header{\n"
+                                  "	border-radius: 5px;\n"
+                                  "	border-image: url(:/icons/icons/bg.png);\n"
+                                  "}\n"
+                                  "\n"
+                                  "#frame{\n"
+                                  "	border-radius: 5px;\n"
+                                  "	background-color: rgba(0, 0, 0, 102);\n"
+                                  "}\n"
+                                  "\n"
+                                  "QPushButton{\n"
+                                  "	border: none;\n"
+                                  "	background-color: none;\n"
+                                  "}")
         self.gridLayout_2 = QGridLayout(self.header)
         self.gridLayout_2.setSpacing(0)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
         self.frame = QFrame(self.header)
         self.frame.setObjectName(u"frame")
-        self.frame.setStyleSheet(u"background-image: url(:/icons/icons/bg.png);")
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy)
+        self.frame.setMinimumSize(QSize(0, 200))
+        self.frame.setSizeIncrement(QSize(0, 0))
+        self.frame.setToolTipDuration(1)
+        self.frame.setAutoFillBackground(False)
+        self.frame.setStyleSheet(u"")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
         self.verticalLayout_3 = QVBoxLayout(self.frame)
         self.verticalLayout_3.setSpacing(12)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.verticalLayout_3.setContentsMargins(12, 32, 0, 32)
         self.header_time = QLabel(self.frame)
         self.header_time.setObjectName(u"header_time")
         self.header_time.setMaximumSize(QSize(16777215, 42))
         self.header_time.setStyleSheet(u"font-size: 32px;\n"
-"color: #FFFFFF;\n"
-"font-weight: 900;\n"
-"background: none;\n"
-"")
+                                       "color: #FFFFFF;\n"
+                                       "font-weight: 900;\n"
+                                       "background: none;\n"
+                                       "")
 
         self.verticalLayout_3.addWidget(self.header_time, 0, Qt.AlignHCenter)
 
         self.header_btn = QPushButton(self.frame)
         self.header_btn.setObjectName(u"header_btn")
         self.header_btn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.header_btn.setStyleSheet(u"background:none")
+        self.header_btn.setStyleSheet(u"background:none;\n"
+                                      "")
         icon = QIcon()
         icon.addFile(u":/icons/icons/light_play.svg", QSize(), QIcon.Normal, QIcon.Off)
         icon.addFile(u":/icons/icons/light_stop.svg", QSize(), QIcon.Active, QIcon.On)
@@ -85,9 +109,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.header_btn, 0, Qt.AlignHCenter)
 
-
         self.gridLayout_2.addWidget(self.frame, 0, 0, 1, 1)
-
 
         self.verticalLayout.addWidget(self.header)
 
@@ -101,18 +123,17 @@ class Ui_MainWindow(object):
         self.projects_header.setObjectName(u"projects_header")
         self.projects_header.setMinimumSize(QSize(0, 0))
         self.projects_header.setStyleSheet(u"QLabel{\n"
-"	color: #111111;\n"
-"}\n"
-"\n"
-"#projects_header{\n"
-"	border: none;\n"
-"}\n"
-"#projects_title{\n"
-"	border-bottom: 2px solid #EDEEFF;\n"
-"}")
+                                           "	color: #111111;\n"
+                                           "}\n"
+                                           "\n"
+                                           "#projects_header{\n"
+                                           "	border: none;\n"
+                                           "}\n"
+                                           "")
         self.projects_header.setFrameShape(QFrame.StyledPanel)
         self.projects_header.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_2 = QHBoxLayout(self.projects_header)
+        self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(-1, 0, -1, 0)
         self.projects_title = QWidget(self.projects_header)
@@ -121,11 +142,11 @@ class Ui_MainWindow(object):
         self.projects_title.setStyleSheet(u"")
         self.horizontalLayout = QHBoxLayout(self.projects_title)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 16, 0, 16)
+        self.horizontalLayout.setContentsMargins(0, 16, 0, 0)
         self.projects_header_title = QLabel(self.projects_title)
         self.projects_header_title.setObjectName(u"projects_header_title")
         self.projects_header_title.setStyleSheet(u"font-size: 20px;\n"
-"font-weight: 700;")
+                                                 "font-weight: 700;")
 
         self.horizontalLayout.addWidget(self.projects_header_title)
 
@@ -134,9 +155,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.time_spent_today, 0, Qt.AlignRight)
 
-
         self.horizontalLayout_2.addWidget(self.projects_title)
-
 
         self.verticalLayout_2.addWidget(self.projects_header)
 
@@ -144,45 +163,43 @@ class Ui_MainWindow(object):
         self.projects_frame.setObjectName(u"projects_frame")
         self.projects_frame.viewport().setProperty("cursor", QCursor(Qt.PointingHandCursor))
         self.projects_frame.setStyleSheet(u"QScrollArea{\n"
-"	border: none;\n"
-"}\n"
-"\n"
-"QScrollBar:vertical{\n"
-"	background-color: #EDEEFF;\n"
-"	width: 3px;\n"
-"}\n"
-"\n"
-"QScrollBar:handle{\n"
-"	background-color:  #000080;\n"
-"\n"
-"}\n"
-"QScrollBar:handle:hover,\n"
-"QScrollBar:handle:pressed{\n"
-"	background-color:  #000180;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:vertical,\n"
-"QScrollBar::add-line:vertical{\n"
-"	border: none;\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
+                                          "	border: none;\n"
+                                          "}\n"
+                                          "\n"
+                                          "QScrollBar:vertical{\n"
+                                          "	background-color: #EDEEFF;\n"
+                                          "	width: 3px;\n"
+                                          "}\n"
+                                          "\n"
+                                          "QScrollBar:handle{\n"
+                                          "	background-color:  #000080;\n"
+                                          "\n"
+                                          "}\n"
+                                          "QScrollBar:handle:hover,\n"
+                                          "QScrollBar:handle:pressed{\n"
+                                          "	background-color:  #000180;\n"
+                                          "}\n"
+                                          "\n"
+                                          "QScrollBar::sub-line:vertical,\n"
+                                          "QScrollBar::add-line:vertical{\n"
+                                          "	border: none;\n"
+                                          "}\n"
+                                          "\n"
+                                          "\n"
+                                          "\n"
+                                          "")
         self.projects_frame.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
         self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 567, 351))
         self.scrollAreaWidgetContents.setMinimumSize(QSize(0, 0))
         self.scrollAreaWidgetContents.setStyleSheet(u"QFrame{\n"
-"border-radius: 5px;\n"
-"border: none;\n"
-"}")
+                                                    "border-radius: 5px;\n"
+                                                    "border: none;\n"
+                                                    "}")
         self.verticalLayout_4 = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-
-
 
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -192,9 +209,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.projects_frame)
 
-
         self.verticalLayout.addWidget(self.projects)
-
 
         self.verticalLayout_10.addWidget(self.content_frame)
 
@@ -215,9 +230,9 @@ class Ui_MainWindow(object):
         self.settings.setObjectName(u"settings")
         self.settings.setCursor(QCursor(Qt.PointingHandCursor))
         self.settings.setStyleSheet(u"color: #111111;\n"
-"font-size: 16px;\n"
-"font-weight: 500;\n"
-"border: none;")
+                                    "font-size: 16px;\n"
+                                    "font-weight: 500;\n"
+                                    "border: none;")
         icon3 = QIcon()
         icon3.addFile(u":/icons/icons/settings.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.settings.setIcon(icon3)
@@ -229,9 +244,9 @@ class Ui_MainWindow(object):
         self.logout.setObjectName(u"logout")
         self.logout.setCursor(QCursor(Qt.PointingHandCursor))
         self.logout.setStyleSheet(u"color: #AAAAAA;\n"
-"font-size: 16px;\n"
-"font-weight: 500;\n"
-"border: none;")
+                                  "font-size: 16px;\n"
+                                  "font-weight: 500;\n"
+                                  "border: none;")
         icon4 = QIcon()
         icon4.addFile(u":/icons/icons/logout.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.logout.setIcon(icon4)
@@ -239,9 +254,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addWidget(self.logout, 0, Qt.AlignRight)
 
-
         self.horizontalLayout_3.addWidget(self.footer_frame)
-
 
         self.verticalLayout_10.addWidget(self.footer)
 
@@ -250,6 +263,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         QMetaObject.connectSlotsByName(MainWindow)
+
     # setupUi
 
     def retranslateUi(self, MainWindow):
@@ -259,6 +273,4 @@ class Ui_MainWindow(object):
         self.projects_header_title.setText(QCoreApplication.translate("MainWindow", u"Projects", None))
         self.time_spent_today.setText(QCoreApplication.translate("MainWindow", u"Time spent today", None))
         self.settings.setText(QCoreApplication.translate("MainWindow", u" Settings", None))
-        self.logout.setText(QCoreApplication.translate("MainWindow", u"  Lou out", None))
-    # retranslateUi
-
+        self.logout.setText(QCoreApplication.translate("MainWindow", u"  Log out", None))
