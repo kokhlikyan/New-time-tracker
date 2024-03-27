@@ -1,5 +1,6 @@
-from PySide6.QtWidgets import QMainWindow, QDialog
+from PySide6.QtWidgets import QMainWindow, QDialog, QPushButton
 
+from events.screenshot_taker import ScreenshotTaker
 from events.timer import Timer
 from observer.main import ConcreteSubject
 from ui.app.projects import Projects
@@ -29,18 +30,23 @@ class ExpenseTracker(QMainWindow):
         self.settings = Settings(self.ui)
 
         self.timer = Timer(self.subject)
-        self.mouse_thrade = MouseListener()
+        self.mouse_thread = MouseListener()
+        self.screenshot_taker = ScreenshotTaker()
 
         self.subject.attach(self.projects)
+        self.subject.attach(self.settings)
         self.subject.attach(self.timer)
-        self.subject.attach(self.mouse_thrade)
+        self.subject.attach(self.mouse_thread)
+        self.subject.attach(self.screenshot_taker)
         self.subject.notify()
 
+    def __del__(self):
+        print('deleted')
     def closeEvent(self, event):
-        self.subject.set_status()
-        self.subject.notify()
         super().closeEvent(event)
-
+        self.subject.stop()
+        self.timer.stop()
+        self.mouse_thread.stop_listener()
 
     def logout(self):
         session = select_session()

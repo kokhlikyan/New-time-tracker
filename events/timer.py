@@ -37,10 +37,9 @@ class Timer(threading.Thread, Observer):
         if self.last_project:
             self.elapsed_time = qtime_to_seconds(self.last_project.time)
 
-
     def run(self):
         self.stop_flag.clear()
-        thr = threading.Thread(target=self.run_timer, daemon=True)
+        thr = threading.Thread(target=self.run_timer, daemon=True, name='Timer runner')
         thr.start()
 
     def run_timer(self):
@@ -49,13 +48,11 @@ class Timer(threading.Thread, Observer):
             self.update_time()
             time.sleep(1)
 
-
     def update_time(self):
         self.elapsed_time = self.elapsed_time.addSecs(1)
         project_time = self.project.findChild(QLabel, "project_time")
         project_time.setText(format_time(qtime_to_seconds(self.elapsed_time)))
         self.app.header_time.setText(format_time(qtime_to_seconds(self.elapsed_time)))
-
 
     def stop(self):
         self.stop_flag.set()
@@ -78,7 +75,3 @@ class Timer(threading.Thread, Observer):
                 project = get_project(self.current_project)
                 project_time = self.project.findChild(QLabel, "project_time")
                 project_time.setText(format_time(project.time))
-
-
-
-

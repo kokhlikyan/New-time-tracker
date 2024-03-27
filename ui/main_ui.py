@@ -48,17 +48,21 @@ class Ui_MainWindow(object):
         self.header.setMaximumSize(QSize(16777215, 16777215))
         self.header.setStyleSheet(u"#header{\n"
                                   "	border-radius: 5px;\n"
-                                  "	border-image: url(:/icons/icons/bg.png);\n"
                                   "}\n"
                                   "\n"
                                   "#frame{\n"
                                   "	border-radius: 5px;\n"
                                   "	background-color: rgba(0, 0, 0, 102);\n"
+                                  "	border-image: none;\n"
                                   "}\n"
                                   "\n"
                                   "QPushButton{\n"
                                   "	border: none;\n"
                                   "	background-color: none;\n"
+                                  "	border-image: none;\n"
+                                  "}\n"
+                                  "QLabel{\n"
+                                  "	border-image: none;\n"
                                   "}")
         self.gridLayout_2 = QGridLayout(self.header)
         self.gridLayout_2.setSpacing(0)

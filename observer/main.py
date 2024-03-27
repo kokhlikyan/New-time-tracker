@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import threading
 from abc import ABC, abstractmethod
 
 from PySide6.QtWidgets import QFrame, QLabel
@@ -56,6 +57,10 @@ class Subject(ABC):
         pass
 
     @abstractmethod
+    def stop(self, ) -> None:
+        pass
+
+    @abstractmethod
     def get_status(self) -> bool:
         pass
 
@@ -65,6 +70,14 @@ class Subject(ABC):
 
     @abstractmethod
     def get_session(self) -> Session:
+        pass
+
+    @abstractmethod
+    def monitor(self) -> str:
+        pass
+
+    @abstractmethod
+    def set_monitor(self, monitor_type: str) -> None:
         pass
 
 
@@ -77,20 +90,19 @@ class ConcreteSubject(Subject):
     _project_name = None
     _status = False
     _last_project_name = None
+    _monitor = 'active'
 
     def __init__(self, app):
         self._app = app
         self._session = select_session()
 
     def attach(self, observer: Observer) -> None:
-        logging.info("Subject: Attached an observer.")
         self._observers.append(observer)
 
     def detach(self, observer: Observer) -> None:
         self._observers.remove(observer)
 
     def notify(self) -> None:
-        logging.info("Subject: Notifying observers...")
         for observer in self._observers:
             observer.update(self)
 
@@ -107,7 +119,6 @@ class ConcreteSubject(Subject):
             self._project = project
             self._project_name = tmp_project_name
         self.notify()
-
 
     def get_project(self) -> QFrame:
         return self._project
@@ -127,6 +138,10 @@ class ConcreteSubject(Subject):
     def set_status(self) -> None:
         self._status = not self._status
 
+    def stop(self) -> None:
+        self._status = False
+        self.notify()
+
     def get_status(self) -> bool:
 
         return self._status
@@ -134,3 +149,8 @@ class ConcreteSubject(Subject):
     def get_session(self) -> Session:
         return self._session
 
+    def monitor(self) -> str:
+        return self._monitor
+
+    def set_monitor(self, monitor_type) -> None:
+        self._monitor = monitor_type

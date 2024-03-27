@@ -1,8 +1,11 @@
-from PySide6.QtCore import QSize, Qt, QCoreApplication, QObject
+import time
+
+from PySide6.QtCore import QSize, Qt, QCoreApplication, QObject, QTimer
 from PySide6.QtGui import QCursor, QIcon
 from PySide6.QtWidgets import QFrame, QVBoxLayout, QLabel, QHBoxLayout, QPushButton, QPlainTextEdit
 from observer.main import Observer, Subject
 from storage.queries.selects import get_project
+from storage.queries.inserts import create_or_update
 from helpers.time import format_time
 
 
@@ -14,10 +17,12 @@ class Projects(QObject):
         self.projects = []
         self.project = None
         self.app.header_btn.clicked.connect(self.play_from_header_button)
+        self.timer = QTimer()
+        self.timer.setSingleShot(True)
+        self.timer.timeout.connect(self.unblock_button)
 
     def render(self):
         for i in range(1, 5):
-
             self.project = QFrame(self.app.scrollAreaWidgetContents)
             self.project.setObjectName(u"project")
             self.project.setMaximumSize(QSize(16777215, 16777215))
@@ -169,8 +174,6 @@ class Projects(QObject):
 
             self.app.verticalLayout_4.addWidget(self.project_line_5)
 
-
-
             self.app.verticalLayout_4.addWidget(self.project)
             self.project_description_toggle.toggle()
             self.project_description.hide()
@@ -186,18 +189,35 @@ class Projects(QObject):
             self.project_description_save.setText(QCoreApplication.translate("MainWindow", u"Save", None))
             self.projects.append(self.project)
             self.project_btn.toggled.connect(self.play)
+            self.project_description_save.clicked.connect(self.save_description)
 
     def play(self):
         sender = self.sender()
+
         self.subject.set_status()
         self.subject.add_or_update_project(sender.parent().parent().parent())
         self.switch_enabled(sender)
+        self.block_button()
+        if sender.isChecked() is False:
+            self.subject.stop()
+
+    def block_button(self):
+        self.sender().setEnabled(False)
+        self.timer.start(500)
+
+    def unblock_button(self):
+        btn = self.subject.get_project().findChild(QPushButton, "project_btn")
+        btn.setEnabled(True)
 
     def play_from_header_button(self):
         btn = self.subject.get_project().findChild(QPushButton, "project_btn")
         btn.toggle()
         self.switch_enabled(btn)
 
+    def save_description(self):
+        project_name = self.sender().parent().parent().findChild(QLabel, 'project_name').text()
+        description = self.sender().parent().findChild(QPlainTextEdit, 'project_description')
+        create_or_update(project_name, description=description.toPlainText())
 
     def switch_enabled(self, sender):
         for project in self.projects:
@@ -211,8 +231,10 @@ class Projects(QObject):
                 saved_project = get_project(project_name.text())
                 if saved_project is not None:
                     project_time = project.findChild(QLabel, "project_time")
+                    project_description = project.findChild(QPlainTextEdit, "project_description")
                     track_time = format_time(saved_project.time)
                     project_time.setText(QCoreApplication.translate("MainWindow", track_time, None))
+                    project_description.setPlainText(saved_project.description)
 
     def update(self, subject: Subject) -> None:
         self.subject = subject
