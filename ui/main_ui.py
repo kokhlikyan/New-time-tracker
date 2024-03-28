@@ -48,7 +48,6 @@ class Ui_MainWindow(object):
         self.header.setMaximumSize(QSize(16777215, 16777215))
         self.header.setStyleSheet(u"#header{\n"
                                   "	border-radius: 5px;\n"
-                                  "	border-image: url(:/icons/icons/bg.png);\n"
                                   "}\n"
                                   "\n"
                                   "#frame{\n"
