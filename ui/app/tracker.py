@@ -7,7 +7,6 @@ from ui.app.projects import Projects
 from ui.app.settings import Settings
 from ui.dialog import AuthDialog
 from ui.main_ui import Ui_MainWindow
-from events.keyboard_events import KeyboardMonitorThread
 from events.mouse_events import MouseListener
 
 from storage.queries.deletes import delete_session
@@ -23,7 +22,7 @@ class ExpenseTracker(QMainWindow):
 
         self.ui.setupUi(self)
         self.ui.logout.clicked.connect(self.logout)
-        self.keyboard_monitor_thread = KeyboardMonitorThread()
+        # self.keyboard_monitor_thread = KeyboardMonitorThread()
         self.subject = ConcreteSubject(self.ui)
         self.projects = Projects(self.subject, self.ui)
         self.projects.render()

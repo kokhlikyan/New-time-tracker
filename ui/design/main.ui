@@ -59,17 +59,21 @@
          <property name="styleSheet">
           <string notr="true">#header{
 	border-radius: 5px;
-	border-image: url(:/icons/icons/bg.png);
 }
 
 #frame{
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, 102);
+	border-image: none;
 }
 
 QPushButton{
 	border: none;
-	bakcground-color: none;
+	background-color: none;
+	border-image: none;
+}
+QLabel{
+	border-image: none;
 }</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
@@ -175,7 +179,7 @@ background: none;
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="resources.qrc">
+                <iconset>
                  <normaloff>:/icons/icons/light_play.svg</normaloff>
                  <activeon>:/icons/icons/light_stop.svg</activeon>:/icons/icons/light_play.svg</iconset>
                </property>
@@ -573,7 +577,7 @@ border: none;
                              <string/>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/icons/play.svg</normaloff>
                               <activeon>:/icons/icons/stop.svg</activeon>:/icons/icons/play.svg</iconset>
                             </property>
@@ -667,7 +671,7 @@ background: none;</string>
                           <string>Description </string>
                          </property>
                          <property name="icon">
-                          <iconset resource="resources.qrc">
+                          <iconset>
                            <normaloff>:/icons/icons/top.svg</normaloff>
                            <activeon>:/icons/icons/bottom.svg</activeon>:/icons/icons/top.svg</iconset>
                          </property>
@@ -873,7 +877,7 @@ border: none;</string>
              <string> Settings</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset>
               <normaloff>:/icons/icons/settings.svg</normaloff>:/icons/icons/settings.svg</iconset>
             </property>
             <property name="iconSize">
@@ -899,7 +903,7 @@ border: none;</string>
              <string>Log out</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset>
               <normaloff>:/icons/icons/logout.svg</normaloff>:/icons/icons/logout.svg</iconset>
             </property>
             <property name="iconSize">

@@ -39,7 +39,6 @@ class MouseListener(threading.Thread, Observer):
 
     def update(self, subject: Subject) -> None:
         if subject.get_status():
-
             self.project = get_project(subject.get_project_name())
             if self.project is not None:
                 mouse_event = get_mouse_events(self.project.id)

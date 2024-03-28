@@ -1,40 +1,43 @@
 import logging
 import os
-import random
-import threading
-import time
 import screeninfo
 from datetime import datetime
 from PIL import ImageGrab
-from PySide6.QtCore import QTimer, QObject, Signal, QThread
+from PySide6.QtCore import QTimer, QObject, Signal, QThread, Slot, Qt
 
 from core.config import APP_LOCAL_FOLDER
 from observer.main import Observer, Subject
 from helpers.time import get_random_seconds
 from helpers.main import check_png_file
+from ui.styles.app import get_header_stylesheet
 
 
 class ScreenshotWorker(QObject):
-    screenshot_signal = Signal()
+    startTimerSignal = Signal()
+    stopTimerSignal = Signal()
 
     def __init__(self, subject):
         super().__init__()
-        self.active_screen = None
-        self.timer = None
-        self.subject = subject
-        self.screenshot_time = get_random_seconds() * 1000
-
-    def run_taker(self):
-        self.timer = QTimer()
+        self.ms = 100
+        self.timer = QTimer(self)
         self.timer.timeout.connect(self.capture_screenshots)
-        self.timer.start(self.screenshot_time)
-        logging.info(f'Screenshot will be taken in  {self.screenshot_time / 1000}ms...')
+        self.active_screen = None
+        self.subject = subject
+        self.screenshot_time = get_random_seconds() * self.ms
 
-    def stop(self):
+    @Slot()
+    def start_timer_slot(self):
+        logging.info(f'Screenshot taker is started...')
+        logging.info(f'Screenshot will be taken in  {self.screenshot_time / self.ms}s...')
+        self.timer.start(self.screenshot_time)
+
+    @Slot()
+    def stop_timer_slot(self):
+        logging.info(f'Screenshot taker is stopped...')
         self.timer.stop()
 
+    @Slot()
     def capture_screenshots(self):
-        logging.info(f'Screenshot will be taken in  {self.screenshot_time / 1000}s...')
         folder_name = 'screenshot'
         os.makedirs(os.path.join(APP_LOCAL_FOLDER, folder_name), exist_ok=True)
         screens = screeninfo.get_monitors()
@@ -47,7 +50,8 @@ class ScreenshotWorker(QObject):
             if screen.is_primary == self.active_screen:
                 screenshot = ImageGrab.grab(bbox=(screen.x, screen.y, screen.width, screen.height))
                 self.save_screenshot(screenshot, monitor)
-        self.screenshot_time = get_random_seconds() * 1000
+        self.screenshot_time = get_random_seconds() * self.ms
+        logging.info(f'Screenshot will be taken in  {self.screenshot_time / self.ms}s...')
 
     def save_screenshot(self, screenshot, monitor):
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -60,31 +64,7 @@ class ScreenshotWorker(QObject):
 
     def set_border_image(self, border_image_path):
         app = self.subject.get_app()
-        app.header.setStyleSheet(self.get_stylesheet(border_image_path))
-
-    @staticmethod
-    def get_stylesheet(border_image_path):
-        # Construct and return the stylesheet with the provided border image path
-        stylesheet = f"#header{{\n" \
-                     f"    border-radius: 5px;\n" \
-                     f"    border-image: url({border_image_path});\n" \
-                     f"}}\n" \
-                     f"\n" \
-                     f"#frame{{\n" \
-                     f"    border-radius: 5px;\n" \
-                     f"    background-color: rgba(0, 0, 0, 102);\n" \
-                     f"    border-image: none;\n" \
-                     f"}}\n" \
-                     f"\n" \
-                     f"QPushButton{{\n" \
-                     f"    border: none;\n" \
-                     f"    background-color: none;\n" \
-                     f"    border-image: none;\n" \
-                     f"}}\n" \
-                     f"QLabel{{\n" \
-                     f"    border-image: none;\n" \
-                     f"}}"
-        return stylesheet
+        app.header.setStyleSheet(get_header_stylesheet(border_image_path))
 
 
 class ScreenshotTaker(QThread):
@@ -93,16 +73,20 @@ class ScreenshotTaker(QThread):
         super(ScreenshotTaker, self).__init__()
         self.subject = None
         self.worker = None
-        self.screenshot_time = 10
 
     def run(self):
         self.worker = ScreenshotWorker(self.subject)
-        self.worker.run_taker()
+        self.worker.moveToThread(self)
+
+        self.worker.startTimerSignal.connect(self.worker.start_timer_slot, Qt.QueuedConnection)
+        self.worker.stopTimerSignal.connect(self.worker.stop_timer_slot, Qt.QueuedConnection)
+        self.worker.startTimerSignal.emit()
         self.exec_()
 
     def stop(self):
         if self.worker is not None:
-            self.worker.stop()
+            self.worker.stopTimerSignal.emit()
+            self.quit()
 
     def update(self, subject: Subject) -> None:
         self.subject = subject
