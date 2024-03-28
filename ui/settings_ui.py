@@ -23,7 +23,7 @@ from PySide6.QtWidgets import (QApplication, QButtonGroup, QDialog, QFrame,
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
-            Dialog.setObjectName(u"Dialog")
+            Dialog.setObjectName(u"Settings")
         Dialog.resize(880, 425)
         Dialog.setStyleSheet(u"*{\n"
 "	background-color: #FFFFFF;\n"
@@ -246,14 +246,14 @@ class Ui_Dialog(object):
     # setupUi
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
-        self.settings_btn.setText(QCoreApplication.translate("Dialog", u"PushButton", None))
-        self.screen_capture_title.setText(QCoreApplication.translate("Dialog", u"Screen capture", None))
+        Dialog.setWindowTitle(QCoreApplication.translate("Settings", u"Settings", None))
+        self.settings_btn.setText(QCoreApplication.translate("Settings", u"PushButton", None))
+        self.screen_capture_title.setText(QCoreApplication.translate("Settings", u"Screen capture", None))
         self.screen_capture_active_btn.setText("")
-        self.screen_capture_active_title.setText(QCoreApplication.translate("Dialog", u"Capture Active Monitorabel", None))
-        self.screen_capture_active_desc.setText(QCoreApplication.translate("Dialog", u"Monitor that contains the active application", None))
+        self.screen_capture_active_title.setText(QCoreApplication.translate("Settings", u"Capture Active Monitorabel", None))
+        self.screen_capture_active_desc.setText(QCoreApplication.translate("Settings", u"Monitor that contains the active application", None))
         self.screen_capture_all_btn.setText("")
-        self.screen_capture_all_title.setText(QCoreApplication.translate("Dialog", u"Capture All Monitor", None))
-        self.screen_capture_all_desc.setText(QCoreApplication.translate("Dialog", u"All connected monitors", None))
+        self.screen_capture_all_title.setText(QCoreApplication.translate("Settings", u"Capture All Monitor", None))
+        self.screen_capture_all_desc.setText(QCoreApplication.translate("Settings", u"All connected monitors", None))
     # retranslateUi
 

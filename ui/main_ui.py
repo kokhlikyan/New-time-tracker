@@ -25,7 +25,7 @@ import ui.resources
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
-            MainWindow.setObjectName(u"MainWindow")
+            MainWindow.setObjectName(u"Loxala")
         MainWindow.setEnabled(True)
         MainWindow.resize(591, 699)
         MainWindow.setStyleSheet(u"*{\n"
@@ -48,6 +48,7 @@ class Ui_MainWindow(object):
         self.header.setMaximumSize(QSize(16777215, 16777215))
         self.header.setStyleSheet(u"#header{\n"
                                   "	border-radius: 5px;\n"
+                                  "	border-image: url(:/icons/icons/bg.png);\n"
                                   "}\n"
                                   "\n"
                                   "#frame{\n"
@@ -271,10 +272,10 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.header_time.setText(QCoreApplication.translate("MainWindow", u"00:00:00", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("Loxala", u"Loxala", None))
+        self.header_time.setText(QCoreApplication.translate("Loxala", u"00:00:00", None))
         self.header_btn.setText("")
-        self.projects_header_title.setText(QCoreApplication.translate("MainWindow", u"Projects", None))
-        self.time_spent_today.setText(QCoreApplication.translate("MainWindow", u"Time spent today", None))
-        self.settings.setText(QCoreApplication.translate("MainWindow", u" Settings", None))
-        self.logout.setText(QCoreApplication.translate("MainWindow", u"  Log out", None))
+        self.projects_header_title.setText(QCoreApplication.translate("Loxala", u"Projects", None))
+        self.time_spent_today.setText(QCoreApplication.translate("Loxala", u"Time spent today", None))
+        self.settings.setText(QCoreApplication.translate("Loxala", u" Settings", None))
+        self.logout.setText(QCoreApplication.translate("Loxala", u"  Log out", None))
