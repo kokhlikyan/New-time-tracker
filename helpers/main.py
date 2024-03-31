@@ -8,7 +8,6 @@ from PySide6 import QtCore
 from PySide6.QtCore import QByteArray
 from PySide6.QtGui import QPixmap, QImage
 from plyer import notification
-from Foundation import NSDate, NSUserNotification, NSUserNotificationCenter
 
 
 def generate_token(length=16):
@@ -43,6 +42,7 @@ def other_notification(image_path):
 
 
 def macos_notification(image_path):
+    from Foundation import NSDate, NSUserNotification, NSUserNotificationCenter
     notification = NSUserNotification.alloc().init()
     notification.setTitle_("Screenshot")
     notification.setInformativeText_("screenshot taken")
@@ -56,6 +56,7 @@ def macos_notification(image_path):
 
 def show_notification(image_path):
     if os.name == 'posix':
+
         macos_notification(image_path)
     else:
         other_notification()
