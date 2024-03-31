@@ -2,11 +2,12 @@ import time
 
 from PySide6.QtCore import QSize, Qt, QCoreApplication, QObject, QTimer
 from PySide6.QtGui import QCursor, QIcon
-from PySide6.QtWidgets import QFrame, QVBoxLayout, QLabel, QHBoxLayout, QPushButton, QPlainTextEdit
+from PySide6.QtWidgets import QFrame, QVBoxLayout, QLabel, QHBoxLayout, QPushButton, QPlainTextEdit, QMessageBox
 from observer.main import Observer, Subject
 from storage.queries.selects import get_project
 from storage.queries.inserts import create_or_update
 from helpers.time import format_time
+from ui.success_alert import SuccessAlert
 
 
 class Projects(QObject):
@@ -218,6 +219,9 @@ class Projects(QObject):
         project_name = self.sender().parent().parent().findChild(QLabel, 'project_name').text()
         description = self.sender().parent().findChild(QPlainTextEdit, 'project_description')
         create_or_update(project_name, description=description.toPlainText())
+        alert = SuccessAlert()
+        alert.exec_()
+
 
     def switch_enabled(self, sender):
         for project in self.projects:

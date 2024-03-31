@@ -9,3 +9,4 @@ class SettingsDialog(QDialog, Ui_Dialog):
     def __init__(self):
         super(SettingsDialog, self).__init__()
         self.setupUi(self)
+

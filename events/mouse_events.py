@@ -35,7 +35,7 @@ class MouseListener(threading.Thread, Observer):
             self.listener.stop()
             self.listener.join()
             self.running = False
-            logging.info('mouse event listener is stoped')
+            logging.info('mouse event listener is stopped')
 
     def update(self, subject: Subject) -> None:
         if subject.get_status():

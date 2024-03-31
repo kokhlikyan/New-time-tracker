@@ -1,3 +1,16 @@
 <RCC>
-  <qresource prefix="icons"/>
+  <qresource prefix="icons">
+    <file>design/icons/apple.png</file>
+    <file>design/icons/bg.png</file>
+    <file>design/icons/bottom.svg</file>
+    <file>design/icons/google.png</file>
+    <file>design/icons/light_play.svg</file>
+    <file>design/icons/light_stop.svg</file>
+    <file>design/icons/logout.svg</file>
+    <file>design/icons/play.svg</file>
+    <file>design/icons/resources.qrc</file>
+    <file>design/icons/settings.svg</file>
+    <file>design/icons/stop.svg</file>
+    <file>design/icons/top.svg</file>
+  </qresource>
 </RCC>

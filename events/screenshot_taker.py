@@ -4,17 +4,20 @@ import screeninfo
 from datetime import datetime
 from PIL import ImageGrab
 from PySide6.QtCore import QTimer, QObject, Signal, QThread, Slot, Qt
+from PySide6.QtWidgets import QApplication
 
 from core.config import APP_LOCAL_FOLDER
 from observer.main import Observer, Subject
 from helpers.time import get_random_seconds
-from helpers.main import check_png_file
-from ui.styles.app import get_header_stylesheet
+from helpers.main import check_png_file, show_notification
+from ui.styles.app import get_header_stylesheet, get_cross_platform_url
+from ui.screenshot_dialog import ScreenshotDialog
 
 
 class ScreenshotWorker(QObject):
     startTimerSignal = Signal()
     stopTimerSignal = Signal()
+    screenshotTaken = Signal(str)
 
     def __init__(self, subject):
         super().__init__()
@@ -24,6 +27,7 @@ class ScreenshotWorker(QObject):
         self.active_screen = None
         self.subject = subject
         self.screenshot_time = get_random_seconds() * self.ms
+        self.sdialog = ScreenshotDialog()
 
     @Slot()
     def start_timer_slot(self):
@@ -61,6 +65,7 @@ class ScreenshotWorker(QObject):
         logging.info(f'Took screenshot for {monitor} monitor...')
         if check_png_file(filepath):
             self.set_border_image(filepath)
+            self.screenshotTaken.emit(filepath)
 
     def set_border_image(self, border_image_path):
         app = self.subject.get_app()
@@ -69,19 +74,29 @@ class ScreenshotWorker(QObject):
 
 class ScreenshotTaker(QThread):
 
-    def __init__(self):
+    def __init__(self, mainWindow):
         super(ScreenshotTaker, self).__init__()
         self.subject = None
         self.worker = None
+        self.mainWindow = mainWindow
 
     def run(self):
         self.worker = ScreenshotWorker(self.subject)
         self.worker.moveToThread(self)
 
+        self.worker.screenshotTaken.connect(self.openScreenshotDialog, Qt.QueuedConnection)
         self.worker.startTimerSignal.connect(self.worker.start_timer_slot, Qt.QueuedConnection)
         self.worker.stopTimerSignal.connect(self.worker.stop_timer_slot, Qt.QueuedConnection)
         self.worker.startTimerSignal.emit()
         self.exec_()
+
+    @Slot(str)
+    def openScreenshotDialog(self, filepath):
+        if self.subject and self.subject.get_app():
+            self.worker.sdialog.setStyleSheet(f'border-image: url({get_cross_platform_url(filepath)})')
+            self.worker.sdialog.show()
+            QTimer.singleShot(5000, self.worker.sdialog.close)
+            show_notification(filepath)
 
     def stop(self):
         if self.worker is not None:

@@ -7,6 +7,7 @@ from ui.app.tracker import ExpenseTracker
 from PySide6.QtCore import QDir
 from core.config import APP_LOCAL_FOLDER
 from ui.dialog import AuthDialog
+from ui.screenshot_dialog import ScreenshotDialog
 from storage.database import init, session_factory
 from storage.queries.selects import select_session
 
@@ -18,6 +19,8 @@ def main():
     window = ExpenseTracker()
     if session is None:
         dialog = AuthDialog()
+        sdialog = ScreenshotDialog()
+        sdialog.exec()
         if dialog.exec() == QDialog.Accepted:
             window.show()
             return window

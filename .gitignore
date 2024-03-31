@@ -7,3 +7,4 @@ Tracker.spec
 **/__pycache__
 store
 secret.json
+certificates

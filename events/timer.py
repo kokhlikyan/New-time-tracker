@@ -20,6 +20,7 @@ class Timer(threading.Thread, Observer):
 
     def __del__(self):
         Timer.__instance = None
+        print('Timer deleted')
 
     def __init__(self, subject):
         super(Timer, self).__init__()

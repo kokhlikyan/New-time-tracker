@@ -2,11 +2,16 @@ import logging
 import os
 
 
-def get_header_stylesheet(border_image_path: str):
+def get_cross_platform_url(url: str):
     if os.name == 'nt':
-        border_image_url = os.path.join('file:///', border_image_path.replace('\\', '/'))
+        border_image_url = os.path.join('file:///', url.replace('\\', '/'))
     else:
-        border_image_url = os.path.join('file://', border_image_path)
+        border_image_url = os.path.join('file://', url)
+    return border_image_url
+
+
+def get_header_stylesheet(border_image_path: str):
+    border_image_url = get_cross_platform_url(border_image_path)
     logging.info(f'Image path: {border_image_url}')
     stylesheet = f"#header{{\n" \
                  f"    border-radius: 5px;\n" \
