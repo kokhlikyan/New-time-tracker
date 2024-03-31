@@ -31,12 +31,11 @@ def check_png_file(filename):
         return False
 
 
-def other_notification(image_path):
+def other_notification():
     notification.notify(
         title='Notification Title',
         message='This is a notification message.',
         app_name='My App',
-        app_icon=image_path,  # You can specify an icon if needed
         timeout=10  # Time in seconds the notification is displayed
     )
 
@@ -54,9 +53,9 @@ def macos_notification(image_path):
     center.deliverNotification_(notification)
 
 
-def show_notification(image_path):
+def show_notification():
     if os.name == 'posix':
 
-        macos_notification(image_path)
+        macos_notification()
     else:
         other_notification()
