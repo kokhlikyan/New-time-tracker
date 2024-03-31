@@ -33,9 +33,9 @@ def check_png_file(filename):
 
 def other_notification():
     notification.notify(
-        title='Notification Title',
-        message='This is a notification message.',
-        app_name='My App',
+        title='Screenshot',
+        message='Screenshot taken.',
+        app_name='Loxala',
         timeout=10  # Time in seconds the notification is displayed
     )
 
@@ -44,7 +44,7 @@ def macos_notification():
     from Foundation import NSDate, NSUserNotification, NSUserNotificationCenter
     notification = NSUserNotification.alloc().init()
     notification.setTitle_("Screenshot")
-    notification.setInformativeText_("screenshot taken")
+    notification.setInformativeText_("Screenshot taken")
 
     delivery_date = NSDate.dateWithTimeIntervalSinceNow_(3)
     notification.setDeliveryDate_(delivery_date)
