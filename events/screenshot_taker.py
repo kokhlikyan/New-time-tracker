@@ -96,7 +96,7 @@ class ScreenshotTaker(QThread):
             self.worker.sdialog.setStyleSheet(f'border-image: url({get_cross_platform_url(filepath)})')
             self.worker.sdialog.show()
             QTimer.singleShot(5000, self.worker.sdialog.close)
-            show_notification(filepath)
+            show_notification()
 
     def stop(self):
         if self.worker is not None:

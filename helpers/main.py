@@ -40,7 +40,7 @@ def other_notification():
     )
 
 
-def macos_notification(image_path):
+def macos_notification():
     from Foundation import NSDate, NSUserNotification, NSUserNotificationCenter
     notification = NSUserNotification.alloc().init()
     notification.setTitle_("Screenshot")
