@@ -7,6 +7,7 @@ from PIL import Image
 from PySide6 import QtCore
 from PySide6.QtCore import QByteArray
 from PySide6.QtGui import QPixmap, QImage
+from PySide6.QtWidgets import QMessageBox
 from plyer import notification
 
 
@@ -32,12 +33,23 @@ def check_png_file(filename):
 
 
 def other_notification():
-    notification.notify(
-        title='Screenshot',
-        message='Screenshot taken.',
-        app_name='Loxala',
-        timeout=10  # Time in seconds the notification is displayed
-    )
+    try:
+        if notification.is_available():
+            notification.notify(
+                title='Screenshot',
+                message='Screenshot taken',
+                app_name='Loxala'
+            )
+        else:
+            QMessageBox.warning(None, "Notification Access",
+                                "MyApp requires notification access to show notifications.\n\n"
+                                "To enable notifications:\n"
+                                "1. Open Windows Settings.\n"
+                                "2. Go to System > Notifications & actions.\n"
+                                "3. Find 'MyApp' in the list of apps and enable notifications for it."
+                                )
+    except Exception as e:
+        QMessageBox.critical(None, "Error", f"An error occurred: {str(e)}")
 
 
 def macos_notification():
