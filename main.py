@@ -2,25 +2,43 @@ import os
 import sys
 import logging
 from pathlib import Path
-from PySide6.QtWidgets import QApplication, QDialog
+from PySide6.QtWidgets import QApplication, QDialog, QMessageBox
 from ui.app.tracker import ExpenseTracker
-from PySide6.QtCore import QDir
+from PySide6.QtCore import QDir, QSettings
 from core.config import APP_LOCAL_FOLDER
 from ui.dialog import AuthDialog
-from ui.screenshot_dialog import ScreenshotDialog
-from storage.database import init, session_factory
+from storage.database import init
 from storage.queries.selects import select_session
+
+def request_notification_permission():
+    settings = QSettings("YourCompany", "YourApp")
+    if not settings.value("notification_permission", False):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Question)
+        msg_box.setWindowTitle("Notification Permission")
+        msg_box.setText("Allow notifications?")
+        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg_box.setDefaultButton(QMessageBox.Yes)
+        response = msg_box.show()
+
+        if response == QMessageBox.Yes:
+            settings.setValue("notification_permission", True)
+            return True
+        else:
+            return False
+    else:
+        return True
 
 
 def main():
     # Init databases
     init()
+    if not request_notification_permission():
+        sys.exit(1)
     session = select_session()
     window = ExpenseTracker()
     if session is None:
         dialog = AuthDialog()
-        sdialog = ScreenshotDialog()
-        sdialog.exec()
         if dialog.exec() == QDialog.Accepted:
             window.show()
             return window
@@ -31,6 +49,7 @@ def main():
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+
     try:
         os.makedirs(APP_LOCAL_FOLDER, exist_ok=True)
         log_file_path = os.path.join(APP_LOCAL_FOLDER, 'app.log')
