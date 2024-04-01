@@ -52,7 +52,7 @@ class Ui_Screenshot(object):
     def move_to_bottom_right(self):
         screen_rect = QGuiApplication.primaryScreen().geometry()
         dialog_rect = self.geometry()
-        self.move(screen_rect.right() - dialog_rect.width(), screen_rect.bottom() - dialog_rect.height())
+        self.move(screen_rect.right() - dialog_rect.width() - 10, screen_rect.bottom() - dialog_rect.height() - 100)
     #
 
     def retranslateUi(self, Screenshot):
