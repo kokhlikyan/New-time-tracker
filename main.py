@@ -10,31 +10,9 @@ from ui.dialog import AuthDialog
 from storage.database import init
 from storage.queries.selects import select_session
 
-def request_notification_permission():
-    settings = QSettings("Rocket Systems", "Loxala Tracker")
-    if not settings.value("notification_permission", False):
-        msg_box = QMessageBox()
-        msg_box.setIcon(QMessageBox.Question)
-        msg_box.setWindowTitle("Notification Permission")
-        msg_box.setText("Allow notifications?")
-        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        msg_box.setDefaultButton(QMessageBox.Yes)
-        response = msg_box.exec()
-
-        if response == QMessageBox.Yes:
-            settings.setValue("notification_permission", True)
-            return True
-        else:
-            return False
-    else:
-        return True
-
-
 def main():
     # Init databases
     init()
-    if not request_notification_permission():
-        sys.exit(1)
     session = select_session()
     window = ExpenseTracker()
     if session is None:

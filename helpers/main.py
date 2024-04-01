@@ -40,6 +40,17 @@ def other_notification():
     )
 
 
+def windows_notification():
+    from winotify import Notification
+
+    toast = Notification(
+        app_id='Loxala Tracker',
+        title='Screenshot',
+        msg='Screenshot taken',
+    )
+    toast.show()
+
+
 def macos_notification():
     from Foundation import NSDate, NSUserNotification, NSUserNotificationCenter
     notification = NSUserNotification.alloc().init()
