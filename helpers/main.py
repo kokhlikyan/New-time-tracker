@@ -66,7 +66,8 @@ def macos_notification():
 
 def show_notification():
     if os.name == 'posix':
-
         macos_notification()
+    elif os.name == 'nt':
+        windows_notification()
     else:
         other_notification()
