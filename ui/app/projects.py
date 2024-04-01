@@ -217,8 +217,12 @@ class Projects(QObject):
 
     def save_description(self):
         project_name = self.sender().parent().parent().findChild(QLabel, 'project_name').text()
+        project = get_project(project_name)
+        current_time = 0
+        if project is not None:
+            current_time = project.time
         description = self.sender().parent().findChild(QPlainTextEdit, 'project_description')
-        create_or_update(project_name, time=0, description=description.toPlainText())
+        create_or_update(project_name, time=current_time, description=description.toPlainText())
         alert = SuccessAlert()
         alert.exec_()
 
